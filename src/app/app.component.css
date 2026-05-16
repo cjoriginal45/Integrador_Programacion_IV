@@ -1,0 +1,29 @@
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-layout {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  background: var(--bg-light);
+  transition: margin-left 0.3s ease;
+}
+
+.full-width {
+  width: 100%;
+  padding: 0;
+}
+
+@media (min-width: 1024px) {
+  .main-content:not(.full-width) {
+    margin-left: 260px;
+  }
+}

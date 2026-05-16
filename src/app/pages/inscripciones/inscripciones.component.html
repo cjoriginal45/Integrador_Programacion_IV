@@ -1,0 +1,65 @@
+<div class="page-container">
+  <header class="page-header">
+    <h2>Sistema de Inscripciones</h2>
+  </header>
+
+  <div class="inscripcion-form card">
+    <h3>Nueva Inscripción</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Estudiante</label>
+        <select [(ngModel)]="selectedEstudiante" name="estudiante">
+          <option value="">Seleccione un estudiante...</option>
+          @for (e of estudiantes; track e.id_estudiante) {
+            <option [value]="e.id_estudiante">
+              {{ e.apellido }}, {{ e.nombres }} ({{ e.documento }})
+            </option>
+          }
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Curso</label>
+        <select [(ngModel)]="selectedCurso" name="curso">
+          <option value="">Seleccione un curso...</option>
+          @for (c of cursos; track c.id_curso) {
+            <option [value]="c.id_curso">
+              {{ c.nombre }} - {{ c.descripcion }}
+            </option>
+          }
+        </select>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-primary" (click)="registrarInscripcion()" [disabled]="!selectedEstudiante || !selectedCurso">
+        Registrar Inscripción
+      </button>
+    </div>
+    @if (error) {
+      <p class="error-msg">{{ error }}</p>
+    }
+  </div>
+
+  <div class="table-container">
+    <h3>Inscripciones Recientes</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Estudiante</th>
+          <th>Curso</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (i of inscripciones; track i.id_inscripcion) {
+          <tr>
+            <td>{{ i.fecha_hora_inscripcion | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ i.apellido }}, {{ i.nombres }}</td>
+            <td>{{ i.curso_nombre }}</td>
+            <td><span class="badge">Activa</span></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

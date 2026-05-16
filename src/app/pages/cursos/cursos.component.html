@@ -1,0 +1,26 @@
+<div class="page-container">
+  <div class="page-header">
+    <h2>Catálogo de Cursos</h2>
+  </div>
+
+  <div class="courses-grid">
+    @for (c of cursos; track c.id_curso) {
+      <div class="course-card">
+        <div class="course-header">
+          <h3>{{ c.nombre }}</h3>
+          <span class="badge">Activo</span>
+        </div>
+        <p class="desc">{{ c.descripcion }}</p>
+        <div class="details">
+          <p><strong>Inicio:</strong> {{ c.fecha_inicio }}</p>
+          <p><strong>Carga Horaria:</strong> {{ c.cantidad_horas }} hs</p>
+          <p><strong>Cupos Max:</strong> {{ c.inscriptos_max }}</p>
+        </div>
+      </div>
+    } @empty {
+      <div class="empty-state">
+        <p>No hay cursos registrados o activos en este momento.</p>
+      </div>
+    }
+  </div>
+</div>

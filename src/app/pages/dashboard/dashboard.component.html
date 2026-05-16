@@ -1,0 +1,36 @@
+<div class="dashboard">
+  <header class="header">
+    <h1>Dashboard</h1>
+    <p>Bienvenido al Sistema de Inscripción a Cursos</p>
+  </header>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-val">{{ stats.estudiantes }}</div>
+      <div class="stat-label">Estudiantes Activos</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">{{ stats.cursos }}</div>
+      <div class="stat-label">Cursos Vigentes</div>
+    </div>
+    <div class="stat-card stat-highlight">
+      <div class="stat-val">{{ stats.inscripciones }}</div>
+      <div class="stat-label">Inscripciones Totales</div>
+    </div>
+  </div>
+
+  <div class="quick-actions">
+    <div class="action-card" (click)="navigate('/estudiantes')">
+      <h3>Gestionar Estudiantes</h3>
+      <p>Búsqueda, alta y modificación de alumnos.</p>
+    </div>
+    <div class="action-card" (click)="navigate('/cursos')">
+      <h3>Gestionar Cursos</h3>
+      <p>Administración de oferta académica.</p>
+    </div>
+    <div class="action-card" (click)="navigate('/inscripciones')">
+      <h3>Inscripciones</h3>
+      <p>Registrar alumnos en cursos.</p>
+    </div>
+  </div>
+</div>

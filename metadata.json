@@ -1,0 +1,8 @@
+{
+  "name": "Sistema de Inscripción a Cursos UNER",
+  "description": "Sistema de gestión académica para inscripción a cursos, gestión de estudiantes y dashboard administrativo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
