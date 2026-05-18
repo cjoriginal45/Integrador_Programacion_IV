@@ -159,6 +159,18 @@ app.put('/api/cursos/:id', authenticate, async (req: any, res: any) => {
   }
 });
 
+app.delete('/api/cursos/:id', authenticate, async (req: any, res: any) => {
+  const userId = req.user.id;
+  const now = new Date().toISOString();
+  try {
+    await db.run("UPDATE cursos SET id_curso_estado= 3, id_usuario_modificacion = ?, fecha_hora_modificacion = ? WHERE id_curso = ?",
+       [userId, now, req.params.id]);
+    res.json({ message: 'Eliminado (Soft Delete)' });
+  } catch(err) {
+    res.status(400).json(err);
+  }
+});
+
 // 4. Inscripciones CRUD
 app.get('/api/inscripciones', authenticate, async (req: any, res: any) => {
   const sql = `
