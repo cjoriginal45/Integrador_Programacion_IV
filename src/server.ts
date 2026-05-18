@@ -145,6 +145,19 @@ app.post('/api/cursos', authenticate, async (req: any, res: any) => {
   }
 });
 
+app.put('/api/cursos/:id', authenticate, async (req: any, res: any) => {
+  const { nombre, descripcion, fecha_inicio, cantidad_horas,inscriptos_max, id_curso_estado } = req.body;
+  const userId = req.user.id;
+  const now = new Date().toISOString();
+  
+  try {
+    await db.run(`UPDATE cursos SET nombre=?, descripcion=?, fecha_inicio=?, cantidad_horas=?, inscriptos_max=?, id_curso_estado=?, fecha_hora_modificacion=?, id_usuario_modificacion=? 
+          WHERE id_curso=?`, [nombre, descripcion, fecha_inicio, cantidad_horas, inscriptos_max, id_curso_estado, now, userId, req.params.id]);
+    res.json({ message: 'Actualizado' });
+  } catch(err) {
+    res.status(400).json(err);
+  }
+});
 
 // 4. Inscripciones CRUD
 app.get('/api/inscripciones', authenticate, async (req: any, res: any) => {
