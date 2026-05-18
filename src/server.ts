@@ -131,6 +131,21 @@ app.get('/api/cursos', authenticate, async (req: any, res: any) => {
   }
 });
 
+app.post('/api/cursos', authenticate, async (req: any, res: any) => {
+  const { nombre, descripcion, fecha_inicio, cantidad_horas,inscriptos_max, id_curso_estado } = req.body;
+  const userId = req.user.id;
+  const now = new Date().toISOString();
+  
+  try {
+    const info = await db.run(`INSERT INTO cursos (nombre, descripcion, fecha_inicio, cantidad_horas, inscriptos_max, id_curso_estado, id_usuario_modificacion, fecha_hora_modificacion) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, [nombre, descripcion, fecha_inicio, cantidad_horas, inscriptos_max, id_curso_estado, userId, now]);
+    res.status(201).json({ id: info.lastID });
+  } catch(err) {
+    res.status(400).json(err);
+  }
+});
+
+
 // 4. Inscripciones CRUD
 app.get('/api/inscripciones', authenticate, async (req: any, res: any) => {
   const sql = `
