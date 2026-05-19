@@ -14,10 +14,16 @@ export class CursosComponent implements OnInit {
   cursos: any[] = [];
   searchTerm = '';
   showForm = false;
+  editingId: number | null = null;
 
-  toggleForm() {
-    this.showForm = !this.showForm;
-  }
+  model = {
+    nombre: '',
+    descripcion: '',
+    fecha_inicio: '',
+    cantidad_horas: 0,
+    inscriptos_max: 0,
+    id_curso_estado: 1
+  };
 
   private get headers() {
     return new HttpHeaders().set('Authorization', `Bearer ${typeof localStorage !== 'undefined' ? localStorage.getItem('token') : ''}`);
@@ -35,10 +41,31 @@ export class CursosComponent implements OnInit {
       .subscribe(data => this.cursos = data);
   }
 
+  toggleForm() {
+    this.showForm = !this.showForm;
+    if (!this.showForm) this.cancelEdit();
+  }
+
+  saveCurso() {
+    if (this.editingId) {
+      this.http.put(`/api/cursos/${this.editingId}`, this.model, { headers: this.headers })
+        .subscribe(() => {
+          this.loadCursos();
+          this.cancelEdit();
+        });
+    } else {
+      this.http.post('/api/cursos', this.model, { headers: this.headers })
+        .subscribe(() => {
+          this.loadCursos();
+          this.cancelEdit();
+        });
+    }
+  }
+
   editCurso(c: any) {
-    // Cuando agreguemos el formulario, este método cargará el curso para editarlo.
-    // Por ahora sólo abre el modo edición (aún sin form visible).
-    alert('La edición se conectará cuando agreguemos el formulario.');
+    this.editingId = c.id_curso;
+    this.model = { ...c };
+    this.showForm = true;
   }
 
   deleteCurso(id: number) {
@@ -46,5 +73,18 @@ export class CursosComponent implements OnInit {
       this.http.delete(`/api/cursos/${id}`, { headers: this.headers })
         .subscribe(() => this.loadCursos());
     }
+  }
+
+  cancelEdit() {
+    this.editingId = null;
+    this.showForm = false;
+    this.model = {
+      nombre: '',
+      descripcion: '',
+      fecha_inicio: '',
+      cantidad_horas: 0,
+      inscriptos_max: 0,
+      id_curso_estado: 1
+    };
   }
 }
