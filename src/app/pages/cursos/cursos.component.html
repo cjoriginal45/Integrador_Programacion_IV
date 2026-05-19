@@ -1,6 +1,7 @@
 <div class="page-container">
   <div class="page-header">
     <h2>Catálogo de Cursos</h2>
+    <button class="btn-primary" (click)="toggleForm()">{{ showForm ? 'Cerrar' : '+ Nuevo Curso' }}</button>
   </div>
 
   <div class="search-bar">
@@ -23,6 +24,10 @@
           <p><strong>Inicio:</strong> {{ c.fecha_inicio }}</p>
           <p><strong>Carga Horaria:</strong> {{ c.cantidad_horas }} hs</p>
           <p><strong>Cupos Max:</strong> {{ c.inscriptos_max }}</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn-icon" (click)="editCurso(c)" title="Editar">✏️</button>
+          <button class="btn-icon delete" (click)="deleteCurso(c.id_curso)" title="Eliminar">🗑️</button>
         </div>
       </div>
     } @empty {
