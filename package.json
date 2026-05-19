@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"cross-env NODE_ENV=development RUNNING_SERVER=true tsx src/server.ts\" \"ng serve\"",
+    "dev": "concurrently \"cross-env NODE_ENV=development RUNNING_SERVER=true tsx watch src/server.ts\" \"ng serve\"",
     "build": "rimraf dist && ng build && esbuild src/server.ts --bundle --platform=node --format=esm --packages=external --sourcemap --outfile=dist/server.mjs",
     "start": "cross-env NODE_ENV=production RUNNING_SERVER=true node dist/server.mjs",
     "clean": "rimraf dist",

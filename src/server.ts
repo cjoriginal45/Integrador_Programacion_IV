@@ -123,11 +123,81 @@ app.delete('/api/estudiantes/:id', authenticate, async (req: any, res: any) => {
 
 // 3. Cursos CRUD
 app.get('/api/cursos', authenticate, async (req: any, res: any) => {
+  const { id, nombre, descripcion, estado, page = 1 } = req.query;
+  const limit = 10;
+  const offset = (Number(page) - 1) * limit;
+  let sql = "SELECT * FROM cursos WHERE 1=1";
+  let params: any[] = [];
+  
+if (id) {
+  sql += " AND id_curso = ?";
+  params.push(id);
+}
+
+if (nombre) {
+  sql += " AND nombre LIKE ?";
+  params.push(`%${nombre}%`);
+}
+
+if (descripcion) {
+  sql += " AND descripcion LIKE ?";
+  params.push(`%${descripcion}%`);
+}
+
+if (estado) {
+  sql += " AND id_curso_estado = ?";
+  params.push(estado);
+}else {
+  sql += " AND id_curso_estado != 3"; // Excluir eliminados
+}
+  
+  sql += ` LIMIT ${limit} OFFSET ${offset}`;
+  
   try {
-    const rows = await db.all("SELECT * FROM cursos WHERE id_curso_estado != 3");
+    const rows = await db.all(sql, params);
     res.json(rows);
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+app.post('/api/cursos', authenticate, async (req: any, res: any) => {
+  const { nombre, descripcion, fecha_inicio, cantidad_horas,inscriptos_max, id_curso_estado } = req.body;
+  const userId = req.user.id;
+  const now = new Date().toISOString();
+  
+  try {
+    const info = await db.run(`INSERT INTO cursos (nombre, descripcion, fecha_inicio, cantidad_horas, inscriptos_max, id_curso_estado, id_usuario_modificacion, fecha_hora_modificacion) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, [nombre, descripcion, fecha_inicio, cantidad_horas, inscriptos_max, id_curso_estado, userId, now]);
+    res.status(201).json({ id: info.lastID });
+  } catch(err) {
+    res.status(400).json(err);
+  }
+});
+
+app.put('/api/cursos/:id', authenticate, async (req: any, res: any) => {
+  const { nombre, descripcion, fecha_inicio, cantidad_horas,inscriptos_max, id_curso_estado } = req.body;
+  const userId = req.user.id;
+  const now = new Date().toISOString();
+  
+  try {
+    await db.run(`UPDATE cursos SET nombre=?, descripcion=?, fecha_inicio=?, cantidad_horas=?, inscriptos_max=?, id_curso_estado=?, fecha_hora_modificacion=?, id_usuario_modificacion=? 
+          WHERE id_curso=?`, [nombre, descripcion, fecha_inicio, cantidad_horas, inscriptos_max, id_curso_estado, now, userId, req.params.id]);
+    res.json({ message: 'Actualizado' });
+  } catch(err) {
+    res.status(400).json(err);
+  }
+});
+
+app.delete('/api/cursos/:id', authenticate, async (req: any, res: any) => {
+  const userId = req.user.id;
+  const now = new Date().toISOString();
+  try {
+    await db.run("UPDATE cursos SET id_curso_estado= 3, id_usuario_modificacion = ?, fecha_hora_modificacion = ? WHERE id_curso = ?",
+       [userId, now, req.params.id]);
+    res.json({ message: 'Eliminado (Soft Delete)' });
+  } catch(err) {
+    res.status(400).json(err);
   }
 });
 
