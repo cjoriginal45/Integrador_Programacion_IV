@@ -35,6 +35,18 @@
             <input type="number" [(ngModel)]="model.inscriptos_max" name="inscriptos_max" min="1" required>
           </div>
         </div>
+        @if (editingId) {
+          <div class="form-row">
+            <div class="form-group">
+              <label>Estado del Curso</label>
+              <select [(ngModel)]="model.id_curso_estado" name="id_curso_estado" required>
+                <option [ngValue]="1">Activo</option>
+                <option [ngValue]="2">Finalizado</option>
+                <option [ngValue]="3">Cancelado</option>
+              </select>
+            </div>
+          </div>
+        }
         <div class="form-actions">
           <button type="submit" class="btn-save">Guardar Cambios</button>
           <button type="button" class="btn-cancel" (click)="cancelEdit()">Cancelar</button>
