@@ -1,4 +1,4 @@
-.page-container { padding: 20px; }
+c.page-container { padding: 20px; }
 .courses-grid { 
   display: grid; 
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
@@ -17,3 +17,6 @@
 .details { font-size: 13px; color: #555; }
 .details p { margin: 5px 0; }
 .badge { background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+
+.search-bar { margin-bottom: 20px; }
+.search-bar input { width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ddd; }

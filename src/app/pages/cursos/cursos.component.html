@@ -3,6 +3,14 @@
     <h2>Catálogo de Cursos</h2>
   </div>
 
+  <div class="search-bar">
+    <input type="text"
+           placeholder="Buscar por nombre del curso..."
+           [(ngModel)]="searchTerm"
+           name="searchTerm"
+           (input)="loadCursos()">
+  </div>
+
   <div class="courses-grid">
     @for (c of cursos; track c.id_curso) {
       <div class="course-card">
