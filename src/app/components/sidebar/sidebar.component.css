@@ -1,7 +1,7 @@
 .app-sidebar {
   position: fixed;
   top: 60px;
-  left: -260px;
+  left: -260px; /* Siempre empieza escondido a la izquierda */
   width: 260px;
   height: calc(100vh - 60px);
   background-color: white;
@@ -13,10 +13,10 @@
   flex-direction: column;
 }
 
+/* Esta clase entra en acción gracias a la señal */
 .app-sidebar.is-active {
-  left: 0;
+  left: 0; 
 }
-
 .nav-list {
   list-style: none;
   padding: 20px 0;
@@ -79,9 +79,9 @@
 
 @media (min-width: 1024px) {
   .app-sidebar {
-    left: 0;
+    left: 0; 
   }
   .sidebar-overlay {
-    display: none;
+    display: none; 
   }
 }
