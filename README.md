@@ -1,33 +1,17 @@
 # Sistema de Inscripción a Cursos - Trabajo Final Integrador
 
-[cite_start]Este proyecto corresponde al **Trabajo Final Integrador** para la materia **Programación IV (1er Cuatrimestre 2026)** de la **Licenciatura en Sistemas** en la **Facultad de Ciencias de la Administración - UNER**.
+Este proyecto corresponde al **Trabajo Final Integrador** para la materia **Programación IV (1er Cuatrimestre 2026)** de la **Licenciatura en Sistemas** en la **Facultad de Ciencias de la Administración - UNER**.
 
-[cite_start]El sistema consiste en una aplicación web responsiva diseñada para la intranet de la institución, permitiendo al personal afectado gestionar de manera eficiente el flujo de estudiantes, cursos e inscripciones[cite: 79].
-
----
-
-## Características y Requisitos Funcionales
-
-[cite_start]La aplicación cumple con los siguientes requerimientos detallados por la cátedra:
-
-- [cite_start]**Autenticación:** Pantalla de inicio de sesión segura utilizando tokens JWT[cite: 80, 105].
-- [cite_start]**Dashboard:** Panel de resumen con totales de cursos, estudiantes y accesos rápidos a cursos activos[cite: 81].
-- [cite_start]**Gestión de Estudiantes:** BREAD completo (Browse, Read, Edit, Add, Delete) con criterios de búsqueda avanzados y paginación de resultados[cite: 83, 84, 86, 113].
-- [cite_start]**Gestión de Cursos:** BREAD completo, criterios de búsqueda, paginación y módulo de generación/impresión de diplomas[cite: 89, 91, 92].
-- [cite_start]**Gestión de Inscripciones:** BREAD (exceptuando edición) con paginación[cite: 94, 98].
-- [cite_start]**Validaciones de Negocio:** \* Control estricto de cupos máximos por curso (`inscriptos_max`)[cite: 101].
-  - [cite_start]Restricción para no permitir inscripciones duplicadas[cite: 102].
-- [cite_start]**Bajas Lógicas:** Implementación de _soft deletes_ utilizando los campos de estado (`activo` / `es_activos`) para preservar la integridad de los datos[cite: 108].
-- [cite_start]**Documentación:** Generación e impresión de certificados individuales en formato PDF[cite: 103, 106].
+El sistema consiste en una aplicación web responsiva diseñada para la intranet de la institución, permitiendo al personal afectado gestionar de manera eficiente el flujo de estudiantes, cursos e inscripciones.
 
 ---
 
 ## Requisitos Técnicos y Arquitectura
 
-- [cite_start]**Frontend:** Desarrollado en Angular utilizando diseño responsivo adaptable a distintas resoluciones[cite: 10, 105].
-- [cite_start]**Backend:** API Rest desarrollada bajo buenas prácticas de diseño arquitectónico[cite: 11, 106].
-- [cite_start]**Base de Datos:** Modelo relacional basado en el diagrama oficial (Tablas: `usuarios`, `estudiantes`, `cursos`, `inscripciones`, `cursos_estados`, `inscripciones_estados`).
-- [cite_start]**Seguridad:** Gestión de información sensible del servicio mediante variables de entorno.
+- **Frontend:** Desarrollado en Angular utilizando diseño responsivo adaptable a distintas resoluciones.
+- **Backend:** API Rest desarrollada bajo buenas prácticas de diseño arquitectónico.
+- **Base de Datos:** Modelo relacional basado en el diagrama oficial (Tablas: `usuarios`, `estudiantes`, `cursos`, `inscripciones`, `cursos_estados`, `inscripciones_estados`).
+- **Seguridad:** Gestión de información sensible del servicio mediante variables de entorno.
 
 ---
 
