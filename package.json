@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"cross-env NODE_ENV=development RUNNING_SERVER=true tsx src/server.ts\" \"ng serve\"",
+    "dev": "concurrently \"cross-env NODE_ENV=development RUNNING_SERVER=true tsx watch src/server.ts\" \"ng serve\"",
     "build": "rimraf dist && ng build && esbuild src/server.ts --bundle --platform=node --format=esm --packages=external --sourcemap --outfile=dist/server.mjs",
     "start": "cross-env NODE_ENV=production RUNNING_SERVER=true node dist/server.mjs",
     "clean": "rimraf dist",
@@ -55,5 +55,6 @@
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

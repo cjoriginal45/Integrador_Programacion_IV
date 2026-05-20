@@ -32,6 +32,7 @@
   gap: 12px;
 }
 
+/* Estilos base para TODOS los botones con icono (Hamburguesa y Notificaciones) */
 .btn-icon {
   background: transparent;
   border: none;
@@ -91,11 +92,23 @@
   display: none;
 }
 
-@media (min-width: 768px) {
+/* Por defecto (en Móviles), el menú hamburguesa se muestra */
+.btn-icon.menu-toggle {
+  display: flex;
+}
+
+/* Cambios a partir de pantallas medianas/grandes (Desktop) */
+@media (min-width: 1024px) {
   .brand-title {
     font-size: 18px;
   }
+  
   .user-name {
     display: block;
+  }
+
+  /* OCULTAMOS el botón hamburguesa por completo en Desktop */
+  .btn-icon.menu-toggle {
+    display: none !important;
   }
 }

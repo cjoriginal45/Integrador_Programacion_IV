@@ -3,6 +3,8 @@ build/
 dist/
 coverage/
 .DS_Store
+.angular/
 *.log
 .env*
 !.env.example
+.angular/

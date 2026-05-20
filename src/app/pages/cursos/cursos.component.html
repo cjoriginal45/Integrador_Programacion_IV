@@ -1,6 +1,66 @@
 <div class="page-container">
   <div class="page-header">
     <h2>Catálogo de Cursos</h2>
+    <button class="btn-primary" (click)="toggleForm()">{{ showForm ? 'Cerrar' : '+ Nuevo Curso' }}</button>
+  </div>
+
+  <!-- Formulario de Curso -->
+  @if (showForm) {
+    <div class="form-card">
+      <h3>{{ editingId ? 'Editar' : 'Nuevo' }} Curso</h3>
+      <form (submit)="saveCurso()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre del Curso</label>
+            <input type="text" [(ngModel)]="model.nombre" name="nombre" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Descripción del Curso</label>
+            <input type="text" [(ngModel)]="model.descripcion" name="descripcion">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Fecha de Inicio</label>
+            <input type="date" [(ngModel)]="model.fecha_inicio" name="fecha_inicio" required>
+          </div>
+          <div class="form-group">
+            <label>Carga Horaria</label>
+            <input type="number" [(ngModel)]="model.cantidad_horas" name="cantidad_horas" min="1" required>
+          </div>
+          <div class="form-group">
+            <label>Cupo Máximo</label>
+            <input type="number" [(ngModel)]="model.inscriptos_max" name="inscriptos_max" min="1" required>
+          </div>
+        </div>
+        @if (editingId) {
+          <div class="form-row">
+            <div class="form-group">
+              <label>Estado del Curso</label>
+              <select [(ngModel)]="model.id_curso_estado" name="id_curso_estado" required>
+                <option [ngValue]="1">Activo</option>
+                <option [ngValue]="2">Finalizado</option>
+                <option [ngValue]="3">Cancelado</option>
+              </select>
+            </div>
+          </div>
+        }
+        <div class="form-actions">
+          <button type="submit" class="btn-save">Guardar Cambios</button>
+          <button type="button" class="btn-cancel" (click)="cancelEdit()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  <div class="search-bar">
+    <input type="text"
+           placeholder="Buscar por nombre del curso..."
+           [(ngModel)]="searchTerm"
+           name="searchTerm"
+           (input)="loadCursos()">
   </div>
 
   <div class="courses-grid">
@@ -15,6 +75,10 @@
           <p><strong>Inicio:</strong> {{ c.fecha_inicio }}</p>
           <p><strong>Carga Horaria:</strong> {{ c.cantidad_horas }} hs</p>
           <p><strong>Cupos Max:</strong> {{ c.inscriptos_max }}</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn-icon" (click)="editCurso(c)" title="Editar">✏️</button>
+          <button class="btn-icon delete" (click)="deleteCurso(c.id_curso)" title="Eliminar">🗑️</button>
         </div>
       </div>
     } @empty {

@@ -87,8 +87,14 @@ export async function initDb() {
     const usersCount = await db.get("SELECT COUNT(*) as count FROM usuarios");
     if (usersCount.count === 0) {
       const pass = await bcrypt.hash('admin123', 10);
-      await db.run("INSERT INTO usuarios (apellido, nombre, nombre_usuario, contrasenia) VALUES (?, ?, ?, ?)", ['Ribarola', 'Joaquin', 'admin', pass]);
-      
+      await db.run("INSERT INTO usuarios (apellido, nombre, nombre_usuario, contrasenia) VALUES (?, ?, ?, ?)", ['', 'Admin', 'admin', pass]);
+      await db.run("INSERT INTO usuarios (apellido, nombre, nombre_usuario, contrasenia) VALUES (?, ?, ?, ?)", ['Ribarola', 'Joaquin', 'joaquin', pass]);
+      await db.run("INSERT INTO usuarios (apellido, nombre, nombre_usuario, contrasenia) VALUES (?, ?, ?, ?)", ['Aguilar', 'Luciano', 'luciano', pass]);
+      await db.run("INSERT INTO usuarios (apellido, nombre, nombre_usuario, contrasenia) VALUES (?, ?, ?, ?)", ['Sillen', 'Matias', 'matias', pass]);
+      await db.run("INSERT INTO usuarios (apellido, nombre, nombre_usuario, contrasenia) VALUES (?, ?, ?, ?)", ['Toribio', 'Juan', 'juan', pass]);
+      await db.run("INSERT INTO usuarios (apellido, nombre, nombre_usuario, contrasenia) VALUES (?, ?, ?, ?)", ['Trapote', 'Diego', 'diego', pass]);
+      await db.run("INSERT INTO usuarios (apellido, nombre, nombre_usuario, contrasenia) VALUES (?, ?, ?, ?)", ['Aguero', 'Facundo', 'facundo', pass]);
+
       await db.exec("INSERT INTO cursos_estados (descripcion) VALUES ('Activo'), ('Finalizado'), ('Cancelado')");
       await db.exec("INSERT INTO inscripciones_estados (descripcion) VALUES ('Regular'), ('Baja'), ('Pendiente')");
       
