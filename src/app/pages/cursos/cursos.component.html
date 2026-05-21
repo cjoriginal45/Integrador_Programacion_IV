@@ -75,6 +75,7 @@
           <p><strong>Inicio:</strong> {{ c.fecha_inicio }}</p>
           <p><strong>Carga Horaria:</strong> {{ c.cantidad_horas }} hs</p>
           <p><strong>Cupos Max:</strong> {{ c.inscriptos_max }}</p>
+          <p><strong>Cupos Disponibles:</strong> {{ c.cuposDisponibles }}</p>
         </div>
         <div class="card-actions">
           <button class="btn-icon" (click)="editCurso(c)" title="Editar">✏️</button>

@@ -23,7 +23,7 @@
           <option value="">Seleccione un curso...</option>
           @for (c of cursos; track c.id_curso) {
             <option [value]="c.id_curso">
-              {{ c.nombre }} - {{ c.descripcion }}
+              {{ c.nombre }} - {{ c.descripcion }} - {{c.cuposDisponibles}} cupos disponibles
             </option>
           }
         </select>

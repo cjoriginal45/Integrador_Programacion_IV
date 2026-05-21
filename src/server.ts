@@ -126,33 +126,46 @@ app.get('/api/cursos', authenticate, async (req: any, res: any) => {
   const { id, nombre, descripcion, estado, page = 1 } = req.query;
   const limit = 10;
   const offset = (Number(page) - 1) * limit;
-  let sql = "SELECT * FROM cursos WHERE 1=1";
+
+  let sql = `
+    SELECT 
+      c.*,
+      COALESCE(c.inscriptos_max, 0) - COALESCE(i.activas, 0) AS cuposDisponibles
+    FROM cursos c
+    LEFT JOIN (
+      SELECT id_curso, COUNT(*) AS activas
+      FROM inscripciones
+      WHERE id_inscripcion_estado != 2
+      GROUP BY id_curso
+    ) i ON c.id_curso = i.id_curso
+    WHERE 1=1
+  `;
   let params: any[] = [];
-  
-if (id) {
-  sql += " AND id_curso = ?";
-  params.push(id);
-}
 
-if (nombre) {
-  sql += " AND nombre LIKE ?";
-  params.push(`%${nombre}%`);
-}
+  if (id) {
+    sql += " AND c.id_curso = ?";
+    params.push(id);
+  }
 
-if (descripcion) {
-  sql += " AND descripcion LIKE ?";
-  params.push(`%${descripcion}%`);
-}
+  if (nombre) {
+    sql += " AND c.nombre LIKE ?";
+    params.push(`%${nombre}%`);
+  }
 
-if (estado) {
-  sql += " AND id_curso_estado = ?";
-  params.push(estado);
-}else {
-  sql += " AND id_curso_estado != 3"; // Excluir eliminados
-}
-  
+  if (descripcion) {
+    sql += " AND c.descripcion LIKE ?";
+    params.push(`%${descripcion}%`);
+  }
+
+  if (estado) {
+    sql += " AND c.id_curso_estado = ?";
+    params.push(estado);
+  } else {
+    sql += " AND c.id_curso_estado != 3"; // Excluir eliminados
+  }
+
   sql += ` LIMIT ${limit} OFFSET ${offset}`;
-  
+
   try {
     const rows = await db.all(sql, params);
     res.json(rows);
